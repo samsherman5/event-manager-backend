@@ -24,9 +24,9 @@ app.use(mongoSanitize());
 */
 
 // Accounts
-// app.post('/api/login', accountController.login); // Login
-// app.all('/api/*', accountController.check_cookie); // Middleware Cookie Authentication
-// app.post('/api/create_account', accountController.create_account);
+app.post('/api/login', accountController.login); // Login
+app.all('/api/*', accountController.check_cookie); // Middleware Cookie Authentication
+app.post('/api/create_account', accountController.create_account);
 
 // Weather
 app.get('/api/weather', (req, res) => {
