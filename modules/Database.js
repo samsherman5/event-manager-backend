@@ -7,7 +7,7 @@ const uri = `mongodb+srv://${username}:${password}${link}`;
 
 async function connectToDatabase() {
     
-    mongoose.createConnection(uri, { useNewUrlParser: true }).then(() => {
+    mongoose.connect(uri, { useNewUrlParser: true }).then(() => {
         console.log("New connection to database made!");
     });
 }

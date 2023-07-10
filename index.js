@@ -68,3 +68,6 @@ if (!weather) {
 const database = require('./modules/Database');
 database.connect();
  
+app.listen(3000, () => {
+  console.log("Listening");
+});
