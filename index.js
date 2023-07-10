@@ -9,13 +9,21 @@ const mongoSanitize = require('express-mongo-sanitize');
 const eventController = require('./controllers/eventController');
 const accountController = require('./controllers/accountController');
 
+// Production vs Development Settings
+const isProduction = process.env.NODE_ENV === 'production';
+const allowedOrigins = {
+  credentials: true, 
+  origin: isProduction ? "https://st-events.vercel.app" : "http://localhost:3000"
+}
+
+// App
 const app = express();
 
 /*
   Middleware
 */
 
-app.use(cors());
+app.use(cors(allowedOrigins));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
@@ -48,8 +56,6 @@ app.all('/*', (req, res) => {
   res.sendStatus(404);
 });
 
-module.exports = app;
-
 /*
   Load Modules
 */
@@ -70,6 +76,6 @@ if (!weather) {
 const database = require('./modules/Database');
 database.connect();
  
-app.listen(3000, () => {
+app.listen(8080, () => {
   console.log("Listening");
 });
