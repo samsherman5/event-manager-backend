@@ -24,25 +24,25 @@ app.use(mongoSanitize());
 */
 
 // Accounts
-app.post('/api/login', accountController.login); // Login
-app.all('/api/*', accountController.check_cookie); // Middleware Cookie Authentication
-app.post('/api/create_account', accountController.create_account);
+app.post('/login', accountController.login); // Login
+app.all('/*', accountController.check_cookie); // Middleware Cookie Authentication
+app.post('/create_account', accountController.create_account);
 
 // Weather
-app.get('/api/weather', (req, res) => {
+app.get('/weather', (req, res) => {
     res.json(weather);
 });
 
 // Events
-app.get('/api/events', eventController.get_events);
-app.post('/api/events', eventController.create_event);
-app.post('/api/remove_event', eventController.remove_event);
-app.post('/api/edit_event', eventController.edit_event);
-app.post('/api/clear_events', eventController.clear_events);
+app.get('/events', eventController.get_events);
+app.post('/events', eventController.create_event);
+app.post('/remove_event', eventController.remove_event);
+app.post('/edit_event', eventController.edit_event);
+app.post('/clear_events', eventController.clear_events);
 
 
 // 404
-app.all('/api/*', (req, res) => {
+app.all('/*', (req, res) => {
   res.sendStatus(404);
 });
 
