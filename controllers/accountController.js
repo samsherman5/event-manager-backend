@@ -66,8 +66,6 @@ exports.create_account = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     const match = await checkAccount(req);
 
-    console.log(req.body);
-
     if (match) {
         const expirationTime = Date.now() + 15776640000;
         const cookieValue = uuidv4();
@@ -81,7 +79,7 @@ exports.login = async (req, res, next) => {
             secure: isProduction
         });
 
-        res.redirect('/');
+        res.redirect(req.body.original);
     } else {
         res.sendStatus(401);
     }
@@ -89,8 +87,6 @@ exports.login = async (req, res, next) => {
 
 // Middleware Account Checker
 exports.check_cookie = async (req, res, next) => {
-    console.log(req.cookies);
-    console.log(req.originalURL);
     const cookieValue = req.cookies.authentication;
 
     if (cookieValue && activeCookies[cookieValue] > Date.now()) {
