@@ -81,17 +81,14 @@ exports.login = async (req, res, next) => {
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
         req.connection.socket.remoteAddress);
-
+        
         // sends cookie to the user
         res.cookie('authentication', cookieValue, { 
             maxAge: 15776640000,
             httpOnly: true, 
             secure: isProduction,
-            domain: ((isProduction), 'https://event-manager-backend-d7uu.onrender.com/', 'http://localhost:80')
-        });
-
-        // redirects back to the website
-        res.redirect(req.body.original);
+            domain: isProduction ? 'https://event-manager-backend-d7uu.onrender.com/' : 'localhost'
+        }).redirect(req.body.original);
     } else {
         res.status(401).redirect(req.body.original+'?'); // sends status 401: unauthorized
     }
