@@ -84,7 +84,7 @@ exports.login = async (req, res, next) => {
             maxAge: 15776640000,
             httpOnly: true, 
             secure: true,
-            domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
+            domain: isProduction ? '.onrender.com' : 'localhost',
             path: '/',
             sameSite: 'none'
         }).send();
