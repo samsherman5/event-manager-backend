@@ -88,9 +88,9 @@ exports.login = async (req, res, next) => {
             httpOnly: true, 
             secure: isProduction,
             domain: isProduction ? 'https://event-manager-backend-d7uu.onrender.com/' : 'localhost'
-        }).redirect(req.body.original);
+        }).sendStatus(200);
     } else {
-        res.status(401).redirect(req.body.original+'?'); // sends status 401: unauthorized
+        res.sendStatus(401); // sends status 401: unauthorized
     }
 };
 
