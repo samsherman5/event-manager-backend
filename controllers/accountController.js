@@ -89,7 +89,7 @@ exports.login = async (req, res, next) => {
         // redirects back to the website
         res.redirect(req.body.original);
     } else {
-        res.sendStatus(401); // sends status 401: unauthorized
+        res.status(401).redirect(req.body.original+'?'); // sends status 401: unauthorized
     }
 };
 
