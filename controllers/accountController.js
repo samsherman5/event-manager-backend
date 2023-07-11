@@ -77,17 +77,15 @@ exports.login = async (req, res, next) => {
         const cookieValue = uuidv4(); // creates a new auth cookie using uuid package
         activeCookies[cookieValue] = expirationTime; // adds the new cookie to the list
 
-        console.log("New login from "+
-        req.connection.remoteAddress ||
-        req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress);
+        console.log("New login from "+req.body.username);
         
         // sends cookie to the user
         res.cookie('authentication', cookieValue, { 
             maxAge: 15776640000,
             httpOnly: true, 
             secure: isProduction,
-            domain: isProduction ? 'https://event-manager-backend-d7uu.onrender.com/' : 'localhost'
+            domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
+            path: '/'
         }).sendStatus(200);
     } else {
         res.sendStatus(401); // sends status 401: unauthorized
