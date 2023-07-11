@@ -36,7 +36,7 @@ app.use(mongoSanitize()); // sanitizes for nosql/mongodb injection attemps
 
 // Accounts
 app.post('/login', accountController.login); // login
-app.all('/*', accountController.check_cookie); // middleware - cookie authentication
+// app.all('/*', accountController.check_cookie); // middleware - cookie authentication
 app.post('/create_account', accountController.create_account); // create account
 
 // Weather
