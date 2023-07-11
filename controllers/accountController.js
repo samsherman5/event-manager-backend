@@ -73,28 +73,21 @@ exports.login = async (req, res, next) => {
     const match = await checkAccount(req); // checks if the request body inputted password/username are correct
 
     if (match) {
-        const expirationTime = Date.now() + 604800000; // creates a time of expiration for the cookie, 6 months from current time
+        const expirationTime = Date.now() + 15776640000; // creates a time of expiration for the cookie, 6 months from current time
         const cookieValue = uuidv4(); // creates a new auth cookie using uuid package
         activeCookies[cookieValue] = expirationTime; // adds the new cookie to the list
 
         console.log("New login from "+req.body.username);
         
         // sends cookie to the user
-        res.cookie('__Host-authentication', cookieValue, {
-
-            maxAge: 604800000, // 7 days in milliseconds
-          
-            httpOnly: true,
-          
+        res.cookie('authentication', cookieValue, { 
+            maxAge: 15776640000,
+            httpOnly: true, 
             secure: true,
-          
-            // Remove domain
-          
-            // Remove path
-          
-            sameSite: 'none' 
-          
-          }).send();
+            domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
+            path: '/',
+            sameSite: 'none'
+        }).send();
     } else {
         res.sendStatus(401); // sends status 401: unauthorized
     }
@@ -102,7 +95,7 @@ exports.login = async (req, res, next) => {
 
 // Middleware Account Checker
 exports.check_cookie = async (req, res, next) => {
-    const cookieValue = req.cookies.__Host-authentication; // inputted cookie value
+    const cookieValue = req.cookies.authentication; // inputted cookie value
 
     // checks if the cookie is valid
     if (cookieValue && activeCookies[cookieValue] > Date.now()) {
