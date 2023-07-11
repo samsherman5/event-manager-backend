@@ -77,7 +77,10 @@ exports.login = async (req, res, next) => {
         const cookieValue = uuidv4(); // creates a new auth cookie using uuid package
         activeCookies[cookieValue] = expirationTime; // adds the new cookie to the list
 
-        console.log("New login from "+req.socket.remoteAddress);
+        console.log("New login from "+
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress);
 
         // sends cookie to the user
         res.cookie('authentication', cookieValue, { 
