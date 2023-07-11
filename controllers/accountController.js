@@ -83,7 +83,7 @@ exports.login = async (req, res, next) => {
         res.cookie('authentication', cookieValue, { 
             maxAge: 15776640000,
             httpOnly: true, 
-            secure: false,
+            secure: true,
             domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
             path: '/',
             sameSite: 'none'
