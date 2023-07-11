@@ -1,6 +1,7 @@
 const axios = require('axios');
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
+// gets the day of the week (monday, tuesday, wednesday) from a string formatted (MM-DD-YYYY)
 async function getDayOfWeek(dateString) {
   const [year, month, day] = dateString.split('-');
   const formattedDateString = `${month}/${day}/${year}`;
@@ -10,11 +11,13 @@ async function getDayOfWeek(dateString) {
   return dayOfWeek;
 }
 
+// gets the weather from the api
 async function getWeather() {
   const res = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=10577&days=3&aqi=no&alerts=no`);
   return await res.data;
 }
 
+// capitilizes the first letter of each word
 async function capitilizeWords(str) {
   return new Promise(resolve => {
     const words = str.split(' ');
@@ -31,6 +34,7 @@ async function capitilizeWords(str) {
   });
 }
 
+// weather handler, returns the data for the client
 async function handleWeather() {
   const weather = await getWeather();
 
