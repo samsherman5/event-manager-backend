@@ -73,7 +73,7 @@ exports.login = async (req, res, next) => {
     const match = await checkAccount(req); // checks if the request body inputted password/username are correct
 
     if (match) {
-        const expirationTime = Date.now() + 15776640000; // creates a time of expiration for the cookie, 6 months from current time
+        const expirationTime = Date.now() + 604800000; // creates a time of expiration for the cookie, 6 months from current time
         const cookieValue = uuidv4(); // creates a new auth cookie using uuid package
         activeCookies[cookieValue] = expirationTime; // adds the new cookie to the list
 
@@ -81,7 +81,7 @@ exports.login = async (req, res, next) => {
         
         // sends cookie to the user
         res.cookie('authentication', cookieValue, { 
-            maxAge: 15776640000,
+            maxAge: 604800000,
             httpOnly: true, 
             secure: true,
             domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
