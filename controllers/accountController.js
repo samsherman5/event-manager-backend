@@ -80,14 +80,21 @@ exports.login = async (req, res, next) => {
         console.log("New login from "+req.body.username);
         
         // sends cookie to the user
-        res.cookie('authentication', cookieValue, { 
-            maxAge: 604800000,
-            httpOnly: true, 
+        res.cookie('__Host-authentication', cookieValue, {
+
+            maxAge: 604800000, // 7 days in milliseconds
+          
+            httpOnly: true,
+          
             secure: true,
-            domain: isProduction ? '.onrender.com' : 'localhost',
-            path: '/',
-            sameSite: 'none'
-        }).send();
+          
+            // Remove domain
+          
+            // Remove path
+          
+            sameSite: 'none' 
+          
+          }).send();
     } else {
         res.sendStatus(401); // sends status 401: unauthorized
     }
@@ -95,7 +102,7 @@ exports.login = async (req, res, next) => {
 
 // Middleware Account Checker
 exports.check_cookie = async (req, res, next) => {
-    const cookieValue = req.cookies.authentication; // inputted cookie value
+    const cookieValue = req.cookies.__Host-authentication; // inputted cookie value
 
     // checks if the cookie is valid
     if (cookieValue && activeCookies[cookieValue] > Date.now()) {
