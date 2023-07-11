@@ -86,7 +86,7 @@ exports.login = async (req, res, next) => {
         res.cookie('authentication', cookieValue, { 
             maxAge: 15776640000,
             httpOnly: true, 
-            secure: isProduction
+            secure: false
         });
 
         // redirects back to the website
