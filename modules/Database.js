@@ -14,4 +14,4 @@ async function connectToDatabase() {
 
 exports.connect = async function() {
     await connectToDatabase();
-}
+};
