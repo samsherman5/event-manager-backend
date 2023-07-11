@@ -14,7 +14,7 @@ const weatherController = require('./controllers/weatherController');
 const isProduction = process.env.NODE_ENV === 'production';
 const allowedOrigins = {
   credentials: true, 
-  origin: isProduction ? "https://st-events.vercel.app" : "http://localhost:3000"
+  origin: 'https://st-events.vercel.app'
 };
 
 // App
