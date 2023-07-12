@@ -4,26 +4,36 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
+const rateLimit = require("express-rate-limit");
 
-// Controllers
-const eventController = require('./controllers/eventController');
-const accountController = require('./controllers/accountController');
-const weatherController = require('./controllers/weatherController');
-
-// Production vs Development Settings
+// Modules / Variables
+const database = require('./modules/Database');
 const isProduction = process.env.NODE_ENV === 'production';
+
+/*
+  Middleware Settings
+*/
 const allowedOrigins = {
   credentials: true, 
   origin: isProduction ? "https://st-events.vercel.app" : "http://localhost:3000"
 };
 
-// App
+// const limiter = rateLimit({
+//   windowMs: 60 * 1000, // 1 minute
+//   max: 124, // Maximum 124 requests per minute
+// });
+
+/*
+  Start of App
+*/
 const app = express();
 
 /*
   Middleware
 */
 
+// Rate-Limiting
+// app.use(limiter);
 app.use(cors(allowedOrigins)); // allows cross-origin-requests, letting frontend access this
 app.use(express.urlencoded({ extended: false })); // parses body (p1)
 app.use(express.json()); // parses body (p2)
@@ -34,53 +44,13 @@ app.use(mongoSanitize()); // sanitizes for nosql/mongodb injection attemps
   Route Handlers
 */
 
-// Accounts 
-app.post('/login', accountController.login); // login
-app.all('/*', accountController.check_cookie); // middleware - cookie authentication
-app.post('/create_account', accountController.create_account); // create account
+const mainRoutes = require('./routes/main');
+const errorRoutes = require('./routes/error');
+app.use('/', mainRoutes); // main routes
+app.use('*', errorRoutes) // error / 404 routes
 
-// Weather
-app.get('/weather', weatherController.get_weather); // weather data
-
-/*
-  Events
-*/
-
-app.get('/events', eventController.get_events); // returns event list
-// Header: day (Monday, Tuesday, Wednesday)
-app.post('/events', eventController.create_event); // create event
-// Body: title (string), day (string), organizer (array), time (string) 
-app.post('/remove_event', eventController.remove_event); // removes an event
-// Body: _id (string)
-app.post('/edit_event', eventController.edit_event); // edit event takes 
-// Body: title (string), day (string), organizer (array), time (string), and _id (string)
-app.post('/clear_events', eventController.clear_events); // clear all events
-// no parameters
-
-
-/*
-  404
-*/
-app.all('/*', (req, res) => {
-  res.sendStatus(404); // sends status 404: not found after everything above is attempted
-});
-
-/*
-  Load Modules
-*/
-
-// Weather
-// const handleWeather = require('./modules/Weather');
-// var weather;
-
-// async function run() {
-//   weather = await handleWeather();
-// }
-
-// run();
 
 // Database
-const database = require('./modules/Database');
 database.connect();
  
 /*

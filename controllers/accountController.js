@@ -64,6 +64,7 @@ exports.create_account = async (req, res, next) => {
             }
         });
     }).catch((err) => {
+        res.sendStatus(500);
         console.error(err);
     });
 };
@@ -79,11 +80,14 @@ exports.login = async (req, res, next) => {
 
         console.log("New login from "+req.body.username);
         
+        res.header('Access-Control-Allow-Origin', isProduction ? "https://st-events.vercel.app" : "http://localhost:3000");
+        res.header('Access-Control-Allow-Credentials', true);
+
         // sends cookie to the user
         res.cookie('authentication', cookieValue, { 
             maxAge: 604800000,
             httpOnly: true, 
-            secure: true,
+            secure: isProduction,
             domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
             path: '/',
             sameSite: 'none'
