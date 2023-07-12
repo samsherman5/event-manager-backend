@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
 
         console.log("New login from "+req.body.username);
         
-        res.header('Access-Control-Allow-Origin', isProduction ? "https://st-events.vercel.app" : "http://localhost:3000");
+        res.header('Access-Control-Allow-Origin', "https://st-events.vercel.app");
         res.header('Access-Control-Allow-Credentials', true);
 
         // sends cookie to the user
