@@ -80,17 +80,17 @@ exports.login = async (req, res, next) => {
 
         console.log("New login from "+req.body.username);
         
-        res.header('Access-Control-Allow-Origin', "https://st-events.vercel.app");
+        res.header('Access-Control-Allow-Origin', isProduction ? "https://st-events.vercel.app" : "http://localhost:3000");
         res.header('Access-Control-Allow-Credentials', true);
 
         // sends cookie to the user
         res.cookie('authentication', cookieValue, { 
             maxAge: 604800000,
             httpOnly: true, 
-            secure: true,
-            domain: 'event-manager-backend-d7uu.onrender.com',
+            secure: isProduction,
+            domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
             path: '/',
-            sameSite: 'none'
+            sameSite: isProduction ? 'none' : 'lax'
         }).send();
     } else {
         res.sendStatus(401); // sends status 401: unauthorized
