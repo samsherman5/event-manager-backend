@@ -15,7 +15,7 @@ const weatherController = require('../controllers/weatherController');
     Accounts Handlers
 */
 router.post('/login', accountController.login); // login
-router.use(accountController.check_cookie); // middleware - cookie authentication
+// router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
 
 /*
@@ -35,7 +35,11 @@ router.post('/remove_event', eventController.remove_event); // removes an event
 router.post('/edit_event', eventController.edit_event); // edit event takes 
 // Body: title (string), day (string), organizer (array), time (string), and _id (string)
 router.post('/clear_events', eventController.clear_events); // clear all events
-// no parameters
+// no params
+router.post('/import_json', eventController.import_json); // import json as event list
+// Body: events (stringified json)
+router.get('/export_json', eventController.export_json); // export json event list
+// no params
 
 router.all('*', (req, res) => {
     res.sendStatus(404); // sends status 404: not found after everything above is attempted

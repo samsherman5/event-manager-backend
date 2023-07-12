@@ -95,3 +95,47 @@ exports.clear_events = async (req, res, next) => {
         res.status(500).send('Error occurred while deleting events'); // error occured
       });
 };
+
+exports.import_json = async (req, res, next) => {
+    try {
+        await Event.deleteMany({});
+        const array = req.body.events;
+        for (let i = 0; i < array.length; i++) {
+            const element = array[i];
+            const event = new Event({
+                title: element.title,
+                organizer: element.organizer,
+                time: element.time,
+                day: element.day,
+            });
+
+            await event.save();
+        }
+          
+        res.status(200).send('Success!');
+    } 
+    
+    catch (err) {
+        console.error(err);
+        res.status(500).send('Error occured while importing events. Did you format the JSON right?')
+    }
+}
+
+exports.export_json = async (req, res, next) => {
+    // searches events for all events on the inputted day
+    await Event.find().select('_id title organizer time day').exec().then(docs => {
+        // returns the events for the day specified
+        const response = {
+            events: docs.map(doc => {
+                return {
+                    title: doc.title,
+                    organizer: doc.organizer,
+                    time: doc.time,
+                    day: doc.day
+                };
+            })
+        };
+
+        res.status(200).json(response); // sends the events back as a json
+    });
+};
