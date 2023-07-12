@@ -90,7 +90,7 @@ exports.login = async (req, res, next) => {
             secure: isProduction,
             domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
             path: '/',
-            sameSite: 'none'
+            sameSite: isProduction ? 'none' : 'lax'
         }).send();
     } else {
         res.sendStatus(401); // sends status 401: unauthorized
