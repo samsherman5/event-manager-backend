@@ -15,7 +15,7 @@ const weatherController = require('../controllers/weatherController');
     Accounts Handlers
 */
 router.post('/login', accountController.login); // login
-// router.use(accountController.check_cookie); // middleware - cookie authentication
+router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
 
 /*
