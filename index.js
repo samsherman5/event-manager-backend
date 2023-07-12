@@ -18,10 +18,10 @@ const allowedOrigins = {
   origin: isProduction ? "https://st-events.vercel.app" : "http://localhost:3000"
 };
 
-// const limiter = rateLimit({
-//   windowMs: 60 * 1000, // 1 minute
-//   max: 124, // Maximum 124 requests per minute
-// });
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 124, // Maximum 124 requests per minute
+});
 
 /*
   Start of App
@@ -33,7 +33,7 @@ const app = express();
 */
 
 // Rate-Limiting
-// app.use(limiter);
+app.use(limiter);
 app.use(cors(allowedOrigins)); // allows cross-origin-requests, letting frontend access this
 app.use(express.urlencoded({ extended: false })); // parses body (p1)
 app.use(express.json()); // parses body (p2)
@@ -45,9 +45,7 @@ app.use(mongoSanitize()); // sanitizes for nosql/mongodb injection attemps
 */
 
 const mainRoutes = require('./routes/main');
-const errorRoutes = require('./routes/error');
 app.use('/', mainRoutes); // main routes
-app.use('*', errorRoutes) // error / 404 routes
 
 
 // Database

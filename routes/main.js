@@ -37,4 +37,8 @@ router.post('/edit_event', eventController.edit_event); // edit event takes
 router.post('/clear_events', eventController.clear_events); // clear all events
 // no parameters
 
+router.all('*', (req, res) => {
+    res.sendStatus(404); // sends status 404: not found after everything above is attempted
+});
+
 module.exports = router;

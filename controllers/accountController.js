@@ -87,10 +87,10 @@ exports.login = async (req, res, next) => {
         res.cookie('authentication', cookieValue, { 
             maxAge: 604800000,
             httpOnly: true, 
-            secure: isProduction,
-            domain: isProduction ? 'event-manager-backend-d7uu.onrender.com' : 'localhost',
+            secure: true,
+            domain: 'event-manager-backend-d7uu.onrender.com',
             path: '/',
-            sameSite: isProduction ? 'none' : 'lax'
+            sameSite: 'none'
         }).send();
     } else {
         res.sendStatus(401); // sends status 401: unauthorized
