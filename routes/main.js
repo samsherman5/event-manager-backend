@@ -11,9 +11,13 @@ const eventController = require('../controllers/eventController');
 const accountController = require('../controllers/accountController');
 const weatherController = require('../controllers/weatherController');
 
+
 /*
     Accounts Handlers
 */
+router.get('/status', (req, res) => {
+    res.sendStatus(200);
+})
 router.post('/login', accountController.login); // login
 router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
