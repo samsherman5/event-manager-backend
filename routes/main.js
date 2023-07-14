@@ -19,6 +19,7 @@ router.get('/status', (req, res) => {
     res.sendStatus(200);
 })
 router.post('/login', accountController.login); // login
+router.get('/events', eventController.get_events); // returns event list
 router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
 
@@ -30,7 +31,6 @@ router.get('/weather', weatherController.get_weather); // weather data
 /*
     Events Handlers
 */
-router.get('/events', eventController.get_events); // returns event list
 // Header: day (Monday, Tuesday, Wednesday)
 router.post('/events', eventController.create_event); // create event
 // Body: title (string), day (string), organizer (array), time (string) 
