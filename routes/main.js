@@ -19,7 +19,7 @@ router.get('/status', (req, res) => {
     res.sendStatus(200);
 })
 router.post('/login', accountController.login); // login
-// router.use(accountController.check_cookie); // middleware - cookie authentication
+router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
 
 /*
