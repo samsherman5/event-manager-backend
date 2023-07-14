@@ -19,7 +19,7 @@ router.get('/status', (req, res) => {
     res.sendStatus(200);
 })
 
-router.get('/viewer_ events', eventController.get_events); // returns event list
+router.get('/viewer_events', eventController.get_events); // returns event list
 
 router.post('/login', accountController.login); // login
 
