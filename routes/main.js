@@ -19,6 +19,7 @@ router.get('/status', (req, res) => {
     res.sendStatus(200);
 })
 
+router.get('/weather', weatherController.get_weather); // weather data
 router.get('/viewer_events', eventController.get_events); // returns event list
 
 router.post('/login', accountController.login); // login
@@ -26,10 +27,6 @@ router.post('/login', accountController.login); // login
 router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
 
-/*
-    Weather Handler
-*/
-router.get('/weather', weatherController.get_weather); // weather data
 
 /*
     Events Handlers
