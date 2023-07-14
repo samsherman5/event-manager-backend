@@ -18,8 +18,11 @@ const weatherController = require('../controllers/weatherController');
 router.get('/status', (req, res) => {
     res.sendStatus(200);
 })
+
+router.get('/viewer_ events', eventController.get_events); // returns event list
+
 router.post('/login', accountController.login); // login
-router.get('/events', eventController.get_events); // returns event list
+
 router.use(accountController.check_cookie); // middleware - cookie authentication
 router.post('/create_account', accountController.create_account); // create account
 
@@ -32,6 +35,7 @@ router.get('/weather', weatherController.get_weather); // weather data
     Events Handlers
 */
 // Header: day (Monday, Tuesday, Wednesday)
+router.get('/events', eventController.get_events); // returns event list
 router.post('/events', eventController.create_event); // create event
 // Body: title (string), day (string), organizer (array), time (string) 
 router.post('/remove_event', eventController.remove_event); // removes an event
