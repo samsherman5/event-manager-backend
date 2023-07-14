@@ -33,7 +33,7 @@ const app = express();
 */
 
 // Rate-Limiting
-app.use(limiter);
+// app.use(limiter);
 app.use(cors(allowedOrigins)); // allows cross-origin-requests, letting frontend access this
 app.use(express.urlencoded({ extended: false })); // parses body (p1)
 app.use(express.json()); // parses body (p2)
