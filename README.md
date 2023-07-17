@@ -1,4 +1,10 @@
 
+# event-manager-backend
+
+This is the express API for the [event-manager-frontend](https://github.com/charleywolf/event-manager-frontend/blob/main/README.md), currently in use at the SummerTech coding camp.
+
+
+
 ## API Reference
 
 #### Get status
@@ -119,3 +125,40 @@
 
 
 
+
+## Used By
+
+This project is used by the following companies:
+
+- [SummerTech](https://summertech.net/)
+
+
+## Deployment
+
+To deploy this project run
+
+```bash
+  npm start
+```
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`WEATHER_API_KEY`
+API Key for weather, sign up [here](https://www.weatherapi.com/signup.aspx).
+
+
+`DATABASE_URI`
+The URI to your [MongoDB](https://www.mongodb.com) Database.
+
+`FRONTEND_ADDRESS`
+The address of your frontend, for CORS. Example: `http://localhost:3000`
+
+`BACKEND_DOMAIN`
+The domain of your backend, which is needed for cookies. Example: `localhost`
+
+
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)

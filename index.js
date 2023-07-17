@@ -8,20 +8,20 @@ const rateLimit = require("express-rate-limit");
 
 // Modules / Variables
 const database = require('./modules/Database');
-const isProduction = process.env.NODE_ENV === 'production';
 
 /*
   Middleware Settings
 */
 const allowedOrigins = {
   credentials: true, 
-  origin: isProduction ? "https://st-events.vercel.app" : "http://localhost:3000"
+  origin: process.env.FRONTEND_ADDRESS
+  // origin: isProduction ? "https://st-events.vercel.app" : "http://localhost:3000"
 };
 
-const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 124, // Maximum 124 requests per minute
-});
+// const limiter = rateLimit({
+//   windowMs: 60 * 1000, // 1 minute
+//   max: 124, // Maximum 124 requests per minute
+// });
 
 /*
   Start of App
