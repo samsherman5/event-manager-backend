@@ -33,13 +33,13 @@ router.post('/create_account', accountController.create_account); // create acco
 */
 // Header: day (Monday, Tuesday, Wednesday)
 router.get('/events', eventController.get_events); // returns event list
-router.post('/events', eventController.create_event); // create event
+router.post('/create_event', eventController.create_event); // create event
 // Body: title (string), day (string), organizer (array), time (string) 
-router.post('/remove_event', eventController.remove_event); // removes an event
+router.delete('/remove_event', eventController.remove_event); // removes an event
 // Body: _id (string)
-router.post('/edit_event', eventController.edit_event); // edit event takes 
+router.put('/edit_event', eventController.edit_event); // edit event takes 
 // Body: title (string), day (string), organizer (array), time (string), and _id (string)
-router.post('/clear_events', eventController.clear_events); // clear all events
+router.delete('/clear_events', eventController.clear_events); // clear all events
 // no params
 router.post('/import_json', eventController.import_json); // import json as event list
 // Body: events (stringified json)
