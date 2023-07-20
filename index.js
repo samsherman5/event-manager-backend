@@ -13,9 +13,9 @@ const database = require('./modules/Database');
 */
 
 const allowVercelRequests = (req, res, next) => {
-  const deploymentUrl = req.get('x-vercel-deployment-url');
+  console.log(req);
+  const deploymentUrl = req.header('x-vercel-deployment-url');
   console.log(deploymentUrl);
-  console.log(req.get('Origin'));
   if (deploymentUrl === 'https://st-events.vercel.app') {
     res.setHeader('Access-Control-Allow-Origin', req.get('Origin'));
   }
