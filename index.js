@@ -4,6 +4,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 
 // Modules / Variables
 const database = require('./modules/Database');
@@ -13,20 +14,18 @@ const database = require('./modules/Database');
 */
 
 const allowVercelRequests = (req, res, next) => {
-  console.log(req.headers);
-  const deploymentUrl = req.header('x-vercel-deployment-url');
+  const deploymentUrl = req.headers['vercel-deployment-url'];
   console.log(deploymentUrl);
-  if (deploymentUrl === process.env.FRONTEND_ADDRESS) {
-    res.setHeader('Access-Control-Allow-Origin', req.get('Origin'));
+  if (deploymentUrl !== process.env.FRONTEND_ADDRESS) {
+    res.sendStatus(403);
   }
   next();
 };
 
-
-// const limiter = rateLimit({
-//   windowMs: 60 * 1000, // 1 minute
-//   max: 124, // Maximum 124 requests per minute
-// });
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 256, // Maximum 124 requests per minute
+});
 
 /*
   Start of App
@@ -39,9 +38,15 @@ const app = express();
 
 // Rate-Limiting
 // app.use(limiter);
-const cors = require('cors');
-app.use(cors({origin: '*'}));
-// app.use(allowVercelRequests);
+
+app.use(cors({
+  origin: true, // Allow all origins (replace with your specific origin if needed)
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'vercel-deployment-url'],
+  credentials: true,
+}));
+
+app.use(allowVercelRequests);
 app.use(express.urlencoded({ extended: false })); // parses body (p1)
 app.use(express.json()); // parses body (p2)
 app.use(cookieParser()); // parses cookies
