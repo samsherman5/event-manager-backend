@@ -4,7 +4,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require("express-rate-limit");
-const cors = require("cors");
 
 // Modules / Variables
 const database = require('./modules/Database');
@@ -26,6 +25,24 @@ const limiter = rateLimit({
   max: 256, // Maximum 124 requests per minute
 });
 
+const dynamicCors = (req, res, next) => {
+  const origin = req.headers.origin;
+
+  // Check if the 'Origin' header is present in the request
+  if (origin) {
+    // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  // Set other CORS headers and allow the required methods, headers, and credentials
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, day, vercel-deployment-url');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // Call the next middleware in the chain
+  next();
+};
+
 /*
   Start of App
 */
@@ -38,13 +55,7 @@ const app = express();
 // Rate-Limiting
 // app.use(limiter);
 
-app.use(cors({
-  origin: '*',
-  methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'day', 'vercel-deployment-url'],
-  credentials: true,
-}));
-
+app.use(dynamicCors);
 app.use(allowVercelRequests);
 app.use(express.urlencoded({ extended: false })); // parses body (p1)
 app.use(express.json()); // parses body (p2)
