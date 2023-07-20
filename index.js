@@ -15,7 +15,7 @@ const database = require('./modules/Database');
 const allowVercelRequests = (req, res, next) => {
   const deploymentUrl = req.headers['vercel-deployment-url'];
   if (deploymentUrl !== process.env.FRONTEND_ADDRESS) {
-    res.sendStatus(403);
+    return res.sendStatus(403);
   }
   next();
 };
@@ -26,7 +26,7 @@ const limiter = rateLimit({
 });
 
 const dynamicCors = (req, res, next) => {
-  const origin = req.headers.origin;
+  const origin = req.get('Origin');
 
   // Check if the 'Origin' header is present in the request
   if (origin) {
@@ -39,6 +39,11 @@ const dynamicCors = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, day, vercel-deployment-url');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+  if (req.method === 'OPTIONS') {
+    // Respond with HTTP OK status (200)
+    return res.sendStatus(200);
+  }
+
   // Call the next middleware in the chain
   next();
 };
@@ -46,6 +51,7 @@ const dynamicCors = (req, res, next) => {
 /*
   Start of App
 */
+
 const app = express();
 
 /*
