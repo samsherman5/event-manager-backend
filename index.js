@@ -13,10 +13,10 @@ const database = require('./modules/Database');
 */
 
 const allowVercelRequests = (req, res, next) => {
-  console.log(req);
+  console.log(req.headers);
   const deploymentUrl = req.header('x-vercel-deployment-url');
   console.log(deploymentUrl);
-  if (deploymentUrl === 'https://st-events.vercel.app') {
+  if (deploymentUrl === process.env.FRONTEND_ADDRESS) {
     res.setHeader('Access-Control-Allow-Origin', req.get('Origin'));
   }
   next();
