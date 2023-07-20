@@ -39,7 +39,9 @@ const app = express();
 
 // Rate-Limiting
 // app.use(limiter);
-app.use(allowVercelRequests);
+const cors = require('cors');
+app.use(cors({origin: '*'}));
+// app.use(allowVercelRequests);
 app.use(express.urlencoded({ extended: false })); // parses body (p1)
 app.use(express.json()); // parses body (p2)
 app.use(cookieParser()); // parses cookies
