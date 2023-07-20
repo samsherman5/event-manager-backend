@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
 
         console.log("New login from "+req.body.username);
         
-        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', req.get('Origin'));
         res.header('Access-Control-Allow-Credentials', true);
 
         // sends cookie to the user

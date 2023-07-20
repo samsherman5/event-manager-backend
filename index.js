@@ -15,7 +15,6 @@ const database = require('./modules/Database');
 
 const allowVercelRequests = (req, res, next) => {
   const deploymentUrl = req.headers['vercel-deployment-url'];
-  console.log(deploymentUrl);
   if (deploymentUrl !== process.env.FRONTEND_ADDRESS) {
     res.sendStatus(403);
   }
@@ -40,9 +39,9 @@ const app = express();
 // app.use(limiter);
 
 app.use(cors({
-  origin: true, // Allow all origins (replace with your specific origin if needed)
+  origin: '*',
   methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'vercel-deployment-url'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'day', 'vercel-deployment-url'],
   credentials: true,
 }));
 
