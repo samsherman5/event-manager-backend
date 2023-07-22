@@ -68,6 +68,7 @@ This is the express API for the [event-manager-frontend](https://github.com/char
 | `organizer` | `array`  | **Required**. Organizers, each one is a string. |
 | `time`      | `string` | **Required**. Time the event is for. (6:30PM)   |
 | `tagline`   | `string` | **Required**. Tagline for the event.            |
+| `location`  | `string` | **Required**. Location for the event.           |
 | `day`       | `string` | **Required**. Day the event is for. (Monday)    |
 
 #### Remove event
@@ -93,6 +94,7 @@ This is the express API for the [event-manager-frontend](https://github.com/char
 | `organizer` | `array`  | **Required**. Organizers, each one is a string. |
 | `time`      | `string` | **Required**. Time the event is for. (6:30PM)   |
 | `tagline`   | `string` | **Required**. Tagline for the event.            |
+| `location`  | `string` | **Required**. Location for the event.           |
 | `day`       | `string` | **Required**. Day the event is for. (Monday)    |
 
 #### Clear events
