@@ -1,9 +1,6 @@
-
 # event-manager-backend
 
 This is the express API for the [event-manager-frontend](https://github.com/charleywolf/event-manager-frontend/blob/main/README.md), currently in use at the SummerTech coding camp.
-
-
 
 ## API Reference
 
@@ -12,7 +9,6 @@ This is the express API for the [event-manager-frontend](https://github.com/char
 ```http
   GET /status
 ```
-
 
 #### Get weather
 
@@ -26,19 +22,16 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   GET /viewer_events
 ```
 
-
 #### Login
 
 ```http
   POST /login
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `username`      | `string` | **Required**. Username of login. |
-| `password`      | `string` | **Required**. Password of login. |
-
-
+| Parameter  | Type     | Description                      |
+| :--------- | :------- | :------------------------------- |
+| `username` | `string` | **Required**. Username of login. |
+| `password` | `string` | **Required**. Password of login. |
 
 ### All routes below this require an authentication cookie
 
@@ -48,10 +41,10 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   POST /create_account
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `username`      | `string` | **Required**. Username of new account. |
-| `password`      | `string` | **Required**. Password of new account. |
+| Parameter  | Type     | Description                            |
+| :--------- | :------- | :------------------------------------- |
+| `username` | `string` | **Required**. Username of new account. |
+| `password` | `string` | **Required**. Password of new account. |
 
 #### Get events
 
@@ -59,9 +52,9 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   GET /events
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `(header) day`      | `string` | **Required**. Day to retrieve events for. "Monday" |
+| Parameter      | Type     | Description                                        |
+| :------------- | :------- | :------------------------------------------------- |
+| `(header) day` | `string` | **Required**. Day to retrieve events for. "Monday" |
 
 #### Add event
 
@@ -69,12 +62,13 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   POST /create_event
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `title`      | `string` | **Required**. Title of the event. |
-| `organizer`      | `array` | **Required**. Organizers, each one is a string. |
-| `time`      | `string` | **Required**. Time the event is for. (6:30PM) |
-| `day`      | `string` | **Required**. Day the event is for. (Monday) |
+| Parameter   | Type     | Description                                     |
+| :---------- | :------- | :---------------------------------------------- |
+| `title`     | `string` | **Required**. Title of the event.               |
+| `organizer` | `array`  | **Required**. Organizers, each one is a string. |
+| `time`      | `string` | **Required**. Time the event is for. (6:30PM)   |
+| `tagline`   | `string` | **Required**. Tagline for the event.            |
+| `day`       | `string` | **Required**. Day the event is for. (Monday)    |
 
 #### Remove event
 
@@ -82,9 +76,9 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   DELETE /remove_event
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `_id`      | `string` | **Required**. ID of event to delet.e |
+| Parameter | Type     | Description                          |
+| :-------- | :------- | :----------------------------------- |
+| `_id`     | `string` | **Required**. ID of event to delet.e |
 
 #### Edit event
 
@@ -92,13 +86,14 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   PUT /edit_event
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `_id`      | `string` | **Required**. ID of event to delete. |
-| `title`      | `string` | **Required**. Title of the event. |
-| `organizer`      | `array` | **Required**. Organizers, each one is a string. |
-| `time`      | `string` | **Required**. Time the event is for. (6:30PM) |
-| `day`      | `string` | **Required**. Day the event is for. (Monday) |
+| Parameter   | Type     | Description                                     |
+| :---------- | :------- | :---------------------------------------------- |
+| `_id`       | `string` | **Required**. ID of event to delete.            |
+| `title`     | `string` | **Required**. Title of the event.               |
+| `organizer` | `array`  | **Required**. Organizers, each one is a string. |
+| `time`      | `string` | **Required**. Time the event is for. (6:30PM)   |
+| `tagline`   | `string` | **Required**. Tagline for the event.            |
+| `day`       | `string` | **Required**. Day the event is for. (Monday)    |
 
 #### Clear events
 
@@ -112,9 +107,9 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   POST /import_events
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `events`      | `JSON object` | **Required**. Object of events to import. |
+| Parameter | Type          | Description                               |
+| :-------- | :------------ | :---------------------------------------- |
+| `events`  | `JSON object` | **Required**. Object of events to import. |
 
 #### Export JSON
 
@@ -122,16 +117,11 @@ This is the express API for the [event-manager-frontend](https://github.com/char
   GET /export_json
 ```
 
-
-
-
-
 ## Used By
 
 This project is used by the following companies:
 
 - [SummerTech](https://summertech.net/)
-
 
 ## Deployment
 
@@ -141,14 +131,12 @@ To deploy this project run
   npm start
 ```
 
-
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
 `WEATHER_API_KEY`
 API Key for weather, sign up [here](https://www.weatherapi.com/signup.aspx).
-
 
 `DATABASE_URI`
 The URI to your [MongoDB](https://www.mongodb.com) Database.
@@ -158,7 +146,5 @@ The address of your frontend, for CORS. Example: `http://localhost:3000`
 
 `BACKEND_DOMAIN`
 The domain of your backend, which is needed for cookies. Example: `localhost`
-
-
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
