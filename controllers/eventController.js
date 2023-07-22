@@ -8,6 +8,7 @@ exports.create_event = async (req, res, next) => {
     organizer: req.body.organizer,
     time: req.body.time,
     day: req.body.day,
+    tagline: req.body.tagline,
   });
 
   // saves new event to database
@@ -21,6 +22,7 @@ exports.create_event = async (req, res, next) => {
           title: result.title,
           organizer: result.organizer,
           time: result.time,
+          tagline: result.tagline,
           day: result.day,
         },
       });
@@ -34,7 +36,7 @@ exports.create_event = async (req, res, next) => {
 exports.get_events = async (req, res, next) => {
   // searches events for all events on the inputted day
   await Event.find({ day: req.headers.day })
-    .select("_id title organizer time")
+    .select("_id title tagline organizer time")
     .exec()
     .then((docs) => {
       // returns the events for the day specified
@@ -44,6 +46,7 @@ exports.get_events = async (req, res, next) => {
             _id: doc.id,
             title: doc.title,
             organizer: doc.organizer,
+            tagline: doc.tagline,
             time: doc.time,
             day: doc.day,
           };
@@ -76,6 +79,7 @@ exports.edit_event = async (req, res, next) => {
     const update = {
       title: req.body.title,
       organizer: req.body.organizer,
+      tagline: req.body.tagline,
       time: req.body.time,
       day: req.body.day,
     };
@@ -114,6 +118,7 @@ exports.import_json = async (req, res, next) => {
         organizer: element.organizer,
         time: element.time,
         day: element.day,
+        tagline: element.tagline,
       });
 
       await event.save();
@@ -133,7 +138,7 @@ exports.import_json = async (req, res, next) => {
 exports.export_json = async (req, res, next) => {
   // searches events for all events on the inputted day
   await Event.find()
-    .select("_id title organizer time day")
+    .select("_id title tagline organizer time day")
     .exec()
     .then((docs) => {
       // returns the events for the day specified
@@ -144,6 +149,7 @@ exports.export_json = async (req, res, next) => {
             organizer: doc.organizer,
             time: doc.time,
             day: doc.day,
+            tagline: doc.tagline,
           };
         }),
       };
