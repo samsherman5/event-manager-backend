@@ -5,6 +5,7 @@ const EventSchema = new mongoose.Schema({
   organizer: { type: [String], required: true },
   time: { type: String, required: true },
   tagline: { type: String, required: true },
+  location: { type: String, required: true },
   day: { type: String, required: true },
 });
 
