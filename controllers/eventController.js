@@ -38,25 +38,48 @@ exports.create_event = async (req, res, next) => {
 exports.get_events = async (req, res, next) => {
   // searches events for all events on the inputted day
   await Event.find({ day: req.headers.day })
-    .select("_id title tagline organizer location time")
+    .select("_id title organizer tagline location time")
     .exec()
     .then((docs) => {
-      // returns the events for the day specified
+      // Format the time to be sortable and separate non-formatted events
+      const formattedDocs = [];
+      const nonFormattedDocs = [];
+      docs.forEach((doc) => {
+        if (/^\d{1,2}:\d{2}(AM|PM)$/.test(doc.time)) {
+          const timeParts = doc.time.split(/(?=[APM])/); // Split at the position before AM/PM
+          const timeFormatted = timeParts[0] + " " + timeParts[1]; // Concatenate time and AM/PM
+          formattedDocs.push({ ...doc._doc, timeFormatted });
+        } else {
+          nonFormattedDocs.push(doc._doc);
+        }
+      });
+
+      // Sort the formatted events by timeFormatted
+      formattedDocs.sort((a, b) => {
+        if (a.timeFormatted < b.timeFormatted) return -1;
+        if (a.timeFormatted > b.timeFormatted) return 1;
+        return 0;
+      });
+
+      // Combine the formatted and non-formatted events, with non-formatted events at the start
+      const sortedDocs = [...nonFormattedDocs, ...formattedDocs].map((doc) => {
+        return {
+          _id: doc._id,
+          title: doc.title,
+          organizer: doc.organizer,
+          location: doc.location,
+          tagline: doc.tagline,
+          time: doc.time,
+          day: doc.day,
+        };
+      });
+
+      // sends the events back as a JSON
       const response = {
-        events: docs.map((doc) => {
-          return {
-            _id: doc.id,
-            title: doc.title,
-            organizer: doc.organizer,
-            tagline: doc.tagline,
-            time: doc.time,
-            day: doc.day,
-            location: doc.location,
-          };
-        }),
+        events: sortedDocs,
       };
 
-      res.status(200).json(response); // sends the events back as a json
+      res.status(200).json(response);
     });
 };
 

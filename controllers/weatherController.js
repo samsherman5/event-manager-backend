@@ -2,7 +2,7 @@ const weatherModule = require("../modules/Weather"); // weather api handler
 let weather; // variable to store weather
 let time;
 
-async function getWeather(r) {
+async function getWeather() {
   weather = await weatherModule(); // gets weather
   time = new Date();
 }
