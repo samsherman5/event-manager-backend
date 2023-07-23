@@ -8,6 +8,8 @@ exports.create_event = async (req, res, next) => {
     organizer: req.body.organizer,
     time: req.body.time,
     day: req.body.day,
+    tagline: req.body.tagline,
+    location: req.body.location,
   });
 
   // saves new event to database
@@ -21,6 +23,8 @@ exports.create_event = async (req, res, next) => {
           title: result.title,
           organizer: result.organizer,
           time: result.time,
+          tagline: result.tagline,
+          location: result.location,
           day: result.day,
         },
       });
@@ -101,8 +105,10 @@ exports.edit_event = async (req, res, next) => {
     const update = {
       title: req.body.title,
       organizer: req.body.organizer,
+      tagline: req.body.tagline,
       time: req.body.time,
       day: req.body.day,
+      location: req.body.location,
     };
 
     // options for update, upsert means that if one is not found it will insert a new one (disabled)
@@ -139,6 +145,8 @@ exports.import_json = async (req, res, next) => {
         organizer: element.organizer,
         time: element.time,
         day: element.day,
+        tagline: element.tagline,
+        location: element.location,
       });
 
       await event.save();
@@ -158,7 +166,7 @@ exports.import_json = async (req, res, next) => {
 exports.export_json = async (req, res, next) => {
   // searches events for all events on the inputted day
   await Event.find()
-    .select("_id title organizer time day")
+    .select("_id title tagline organizer location time day")
     .exec()
     .then((docs) => {
       // returns the events for the day specified
@@ -169,6 +177,8 @@ exports.export_json = async (req, res, next) => {
             organizer: doc.organizer,
             time: doc.time,
             day: doc.day,
+            tagline: doc.tagline,
+            location: doc.location,
           };
         }),
       };
