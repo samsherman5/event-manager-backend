@@ -34,7 +34,7 @@ exports.create_event = async (req, res, next) => {
 exports.get_events = async (req, res, next) => {
   // searches events for all events on the inputted day
   await Event.find({ day: req.headers.day })
-    .select("_id title organizer time")
+    .select("_id title organizer tagline location time")
     .exec()
     .then((docs) => {
       // Format the time to be sortable and separate non-formatted events
@@ -63,6 +63,8 @@ exports.get_events = async (req, res, next) => {
           _id: doc._id,
           title: doc.title,
           organizer: doc.organizer,
+          location: doc.location,
+          tagline: doc.tagline,
           time: doc.time,
           day: doc.day,
         };
